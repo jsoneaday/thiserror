@@ -1,5 +1,5 @@
 #![allow(unused)]
-use std::fmt::Display;
+use std::{error::Error, fmt::Display};
 
 #[derive(Debug)]
 pub enum MyError {
@@ -15,13 +15,11 @@ impl Display for MyError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             MyError::ServerError => write!(f, "{}", "Internal Server Error"),
-            MyError::ValidationError { 
-                field_name, 
-                failure_str 
-            } => write!(f, "Field: {}, Error: {}", field_name, failure_str),
-            MyError::NetworkError(failure) => write!(f, "Failure: {}", failure)
+            MyError::ValidationError { field_name, failure_str } =>
+            write!(f, "Field: {} Failure: {}", field_name, failure_str),
+            MyError::NetworkError(msg) => write!(f, "Network failure: {}", msg)
         }
     }
 }
 
-impl std::error::Error for MyError {}
+impl Error for MyError {}

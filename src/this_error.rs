@@ -6,11 +6,11 @@ use std::io;
 pub enum ThisError {
     #[error("Internal Server Error")]
     ServerError,
-    #[error("Validation Error. Field: {}, Failure: {}", .field_name, .failure_str)]
+    #[error("Validation Error: Field: {} Failure: {}", .field_name, .failure_str)]
     ValidationError {
         field_name: String,
         failure_str: String
     },
-    #[error("Network failure occurred: {}", .0)]
-    NetworkError(#[from] io::Error)
+    #[error("Network error: {}", .0)]
+    NetworkError(io::Error)
 }
